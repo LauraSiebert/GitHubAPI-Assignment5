@@ -40,3 +40,9 @@
   .hidden {
     display: none;
   }
+
+  .sublist {
+      font-size: small;
+      font-style: italic;
+      margin-top: 10px;
+  }

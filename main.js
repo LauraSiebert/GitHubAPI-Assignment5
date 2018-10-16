@@ -1,15 +1,14 @@
 'use strict';
 
 function displayResults(responseJson) {
-  // if there are previous results, remove them
   console.log(responseJson);
   $('#results-list').empty();
   $('#results').removeClass('hidden');
   return responseJson.items.forEach(item => {
     $('#results-list').append(
         `<li><strong>Username:</strong> ${item.login} <br>
-        <strong>Repository Location:</strong> <a href="${item.repos_url}" target="_blank">${item.repos_url}</a>
-        <ul>Repository Contents:
+        <strong>Repository Location:</strong> <a href="http://www.github.com/${item.login}?tab=repositories" target="_blank">http://www.github.com/${item.login}?tab=repositories</a><br>
+        <ul class="sublist">Repository Contents:
             <li></li>
         </li>`
     );
@@ -22,6 +21,15 @@ function getUser(userSearch) {
       .then(response => response.json())
       .then(responseJson => 
         displayResults(responseJson))
+      .catch(error => alert(`Something went wrong. Please try again.`));
+}
+
+function getRepo(responseJson) {
+    console.log(`Function getRepo ran.`)
+    fetch(`https://api.github.com/users/${responseJson.items.login}/repos`)
+      .then(response => response.json())
+      .then(responseJson1 => 
+        displayResults(responseJson1))
       .catch(error => alert(`Something went wrong. Please try again.`));
 }
 
