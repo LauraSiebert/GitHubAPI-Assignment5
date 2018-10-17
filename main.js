@@ -13,7 +13,7 @@ function displayResults(responseJson) {
                 <li></li>
             </li>`
         );
-        console.log(getRepo(login));
+        getRepo(login);
     })
 };
 
@@ -27,15 +27,17 @@ function getUsers(userSearch) {
 }
 
 function getRepo(login) {
-    console.log(`Getting repository list.`);
+    console.log(`Getting repository list.`)
     fetch(`https://api.github.com/users/${login}/repos`)
       .then(response => response.json())
-      .then(userRepos => userRepos.name.forEach(repoName => {
-          let repoName = userRepos.name;
-          $('.sublist').append(`<li>${repoName}</li>`)
-      }
-      ))
-      .catch(error => alert(`Something went wrong when getting REPOSITORIES. Please try again.`));
+      .then(userRepos =>
+        userRepos.forEach(item => {
+            $('.sublist').append(
+                `<li><a href="http://www.github.com/${login}/${item.name}" target="_blank">${item.name}</a></li>`
+            )
+        })
+        )
+      .catch(error => alert(`Something went wrong when getting REPOS. Please try again.`));
 }   
 
 function watchForm() {
